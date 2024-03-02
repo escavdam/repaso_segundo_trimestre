@@ -14,7 +14,7 @@ Nos hemos centrado en conocer las diferentes tecnologías de las que disponemos 
 
 ### XMLHttpRequest
 
-Hasta ahora, para obtener datos dinámicos, hemos usado `XMLHttpRequest` para hacer peticiones a un servidor.
+`XMLHttpRequest` nos permite hacer peticiones a un servidor desde JavaScript, fue el primér método que se añadió al navegador para hacer peticiones asíncronas:
 
 ```javascript
 
@@ -33,7 +33,7 @@ Hasta ahora, para obtener datos dinámicos, hemos usado `XMLHttpRequest` para ha
 
 ### Fetch API
 
-En lugar de `XMLHttpRequest`, podemos usar `fetch` para hacer peticiones a un servidor.
+En lugar de `XMLHttpRequest`, podemos usar `fetch` para hacer peticiones a un servidor de forma mas simple:
 
 ```javascript
     fetch('https://eazywarez.glitch.me/')

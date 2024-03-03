@@ -157,3 +157,94 @@ Este código hace una petición a `https://eazywarez.glitch.me` cuando la págin
 
 ---
 
+# Manipulación de DOM
+
+Ya hemos visto las principales formas de manipulación del DOM con JavaScript Vanilla, vamos a recordarlas.
+
+Imagina que nuestro servidor nos devuelve un objeto con la siguiente estructura:
+
+---
+
+```json
+{
+  "nombre": "EazyWarez",
+  "descripcion": "Una empresa de software",
+  "empleados": [
+    {
+      "nombre": "Juan",
+      "edad": 32
+    },
+    {
+      "nombre": "Maria",
+      "edad": 30
+    }
+  ]
+}
+```
+
+---
+```html
+  <div id="contenedor">
+    <p id="nombre"></p>
+    <p id="descripcion"></p>
+    <ul id="empleados"></ul>
+  </div>
+```
+
+```javascript
+  const { nombre, descripcion, empleados } = data;
+  const nombre = document.getElementById('nombre');
+  const descripcion = document.getElementById('descripcion');
+  const empleados = document.getElementById('empleados');
+  nombre.innerHTML = data.nombre;
+  descripcion.innerHTML = data.descripcion;
+  data.empleados.forEach((empleado) => {
+    const li = document.createElement('li');
+    li.innerHTML = `${empleado.nombre} - ${empleado.edad}`;
+    empleados.appendChild(li);
+  });
+
+```
+---
+```html
+<div id="contenedor"></div>
+```
+
+```javascript
+const { nombre, descripcion, empleados } = data;
+const contenedor = document.getElementById('contenedor');
+const p = document.createElement('p');
+p.innerHTML = data.nombre;
+contenedor.appendChild(p);
+const p2 = document.createElement('p');
+p2.innerHTML = data.descripcion;
+contenedor.appendChild(p2);
+const ul = document.createElement('ul');
+data.empleados.forEach((empleado) => {
+  const li = document.createElement('li');
+  li.innerHTML = `${empleado.nombre} - ${empleado.edad}`;
+  ul.appendChild(li);
+});
+contenedor.appendChild(ul);
+```
+
+---
+```html
+<div id="contenedor"></div>
+```
+
+```javascript
+const { nombre, descripcion, empleados } = data;
+const contenedor = document.getElementById('contenedor');
+contenedor.innerHTML = `
+  <p>${data.nombre}</p>
+  <p>${data.descripcion}</p>
+`;
+contenedor.innerHTML += '<ul>';
+data.empleados.forEach((empleado) => {
+  contenedor.innerHTML += `<li>${empleado.nombre} - ${empleado.edad}</li>`;
+});
+contenedor.innerHTML += '</ul>';
+```
+
+---

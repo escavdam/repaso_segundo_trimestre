@@ -181,8 +181,10 @@ Imagina que nuestro servidor nos devuelve un objeto con la siguiente estructura:
   ]
 }
 ```
-
 ---
+# Manipulación de DOM #1
+#### Manipulación directa
+1. Crea tu estructura HTML completa.
 ```html
   <div id="contenedor">
     <p id="nombre"></p>
@@ -190,9 +192,14 @@ Imagina que nuestro servidor nos devuelve un objeto con la siguiente estructura:
     <ul id="empleados"></ul>
   </div>
 ```
-
+---
+2. Captura o crea tus variables con JS.
 ```javascript
   const { nombre, descripcion, empleados } = data;
+```
+3. Rellena tus contenedores con estas variables.
+
+```javascript
   const nombre = document.getElementById('nombre');
   const descripcion = document.getElementById('descripcion');
   const empleados = document.getElementById('empleados');
@@ -203,48 +210,64 @@ Imagina que nuestro servidor nos devuelve un objeto con la siguiente estructura:
     li.innerHTML = `${empleado.nombre} - ${empleado.edad}`;
     empleados.appendChild(li);
   });
-
 ```
 ---
+# Manipulación de DOM #2
+#### Componentes reusables
+[Ejemplo en codepen](https://codepen.io/datadiego/pen/rNRMZYp?editors=0100)
+1. No necesitas estructura en el html, solo un contenedor donde enviarás tu componente.
 ```html
-<div id="contenedor"></div>
+<div id="whooops"></div>
 ```
-
-```javascript
-const { nombre, descripcion, empleados } = data;
-const contenedor = document.getElementById('contenedor');
-const p = document.createElement('p');
-p.innerHTML = data.nombre;
-contenedor.appendChild(p);
-const p2 = document.createElement('p');
-p2.innerHTML = data.descripcion;
-contenedor.appendChild(p2);
-const ul = document.createElement('ul');
-data.empleados.forEach((empleado) => {
-  const li = document.createElement('li');
-  li.innerHTML = `${empleado.nombre} - ${empleado.edad}`;
-  ul.appendChild(li);
-});
-contenedor.appendChild(ul);
-```
+En lugar de manipular de forma global, encapsula tu componente en una función a la que le pasas los datos para rellenar los elementos y su contenedor asociado.
 
 ---
-```html
-<div id="contenedor"></div>
-```
 
+Dentro de tu función, puedes usar funciones y métodos de JS para crear y manipular elementos del DOM como `createElement`, `appendChild`, `innerHTML`, etc. 
 ```javascript
-const { nombre, descripcion, empleados } = data;
-const contenedor = document.getElementById('contenedor');
-contenedor.innerHTML = `
-  <p>${data.nombre}</p>
-  <p>${data.descripcion}</p>
-`;
-contenedor.innerHTML += '<ul>';
-data.empleados.forEach((empleado) => {
-  contenedor.innerHTML += `<li>${empleado.nombre} - ${empleado.edad}</li>`;
-});
-contenedor.innerHTML += '</ul>';
+function crearTarjeta(titulo, desc, emoji, contenedor){
+  const container = document.querySelector(contenedor)
+  const card = document.createElement("div")
+  card.className = "card"
+  container.appendChild(card)
+  const template = `
+  <h2 class="card__titulo">${titulo}</h2>
+  <p class="card__emoji">${emoji}</p>
+  <p class="card__desc">${desc}</p>`
+  card.innerHTML = template;
+}
+crearTarjeta("Investiga", "Entiende bien tu problema y que te piden", "🔬", "#whooops")
 ```
+En el ejemplo usamos `template strings`.
 
 ---
+Necesitarás su CSS asociado:
+```css
+.card{
+  background: black;
+  color: white;
+  width: 20vw;
+  height: 20vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 1rem;
+  container-type: inline-size;
+  padding: 1rem;
+}
+.card__titulo{
+  font-size: 18cqw;
+  font-weight: 600;
+}
+.card__emoji{
+  font-size: 25cqw;
+}
+.card__desc{
+  font-size: 8cqw;
+  text-align: center;
+}
+```
+---
+
+
